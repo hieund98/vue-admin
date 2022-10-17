@@ -78,6 +78,62 @@ export const constantRoutes = [
   },
 
   {
+    path: '/category',
+    component: Layout,
+    name: 'Category',
+    meta: { title: 'Category', icon: 'el-icon-s-fold' },
+    children: [
+      {
+        path: 'edit',
+        hidden: true,
+        name: 'Edit Category',
+        component: () => import('@/views/category/edit-form'),
+        meta: { title: 'EditForm', icon: 'form' }
+      },
+      {
+        path: 'add',
+        name: 'Add Category',
+        component: () => import('@/views/category/edit-form'),
+        meta: { title: 'Add New', icon: 'form' }
+      },
+      {
+        path: 'index',
+        name: 'Category',
+        component: () => import('@/views/category/index'),
+        meta: { title: 'Dashboard', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/product',
+    component: Layout,
+    name: 'Product',
+    meta: { title: 'Product', icon: 'el-icon-s-shop' },
+    children: [
+      {
+        path: 'edit',
+        hidden: true,
+        name: 'Edit Product',
+        component: () => import('@/views/product/edit-form'),
+        meta: { title: 'EditForm', icon: 'form' }
+      },
+      {
+        path: 'add',
+        name: 'Add Product',
+        component: () => import('@/views/product/edit-form'),
+        meta: { title: 'Add New', icon: 'form' }
+      },
+      {
+        path: 'index',
+        name: 'Product',
+        component: () => import('@/views/product/index'),
+        meta: { title: 'Dashboard', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     children: [
