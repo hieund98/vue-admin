@@ -22,17 +22,17 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column label="Name" width="410">
+      <el-table-column label="Name" width="auto" align="center">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="Slug" width="210" align="center">
+      <el-table-column label="Slug" width="auto" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.slug }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Created At" width="220" align="center">
+      <el-table-column label="Created At" width="auto" align="center">
         <template slot-scope="scope">
           <i class="el-icon-time" />
           {{ scope.row.createdAt }}
@@ -43,18 +43,18 @@
       <!--          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
       <!--        </template>-->
       <!--      </el-table-column>-->
-      <el-table-column align="center" prop="created_at" label="Update At" width="220">
+      <el-table-column align="center" prop="created_at" label="Update At" width="auto">
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.updatedAt }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Updated By" width="200">
+      <el-table-column align="center" prop="created_at" label="Updated By" width="auto">
         <template slot-scope="scope">
           <span>{{ scope.row.updatedBy }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Action" width="200">
+      <el-table-column align="center" prop="created_at" label="Action" width="auto">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">Edit</el-button>
           <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"></el-button>
@@ -121,7 +121,7 @@ export default {
     fetchData() {
       this.listLoading = true
       axios
-        .get('http://localhost:3000/categories?name=' + this.form.name)
+        .get('http://localhost:3000/categories?search=' + this.form.name)
         .then(response => {
           this.list = response.data
           console.log(this.list)

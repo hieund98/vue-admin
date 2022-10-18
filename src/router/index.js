@@ -106,6 +106,34 @@ export const constantRoutes = [
   },
 
   {
+    path: '/user',
+    component: Layout,
+    name: 'User',
+    meta: { title: 'Account', icon: 'el-icon-user-solid' },
+    children: [
+      {
+        path: 'edit',
+        hidden: true,
+        name: 'Edit User',
+        component: () => import('@/views/user/edit-form'),
+        meta: { title: 'EditForm', icon: 'form' }
+      },
+      {
+        path: 'add',
+        name: 'Add Product',
+        component: () => import('@/views/user/edit-form'),
+        meta: { title: 'Add New', icon: 'form' }
+      },
+      {
+        path: 'index',
+        name: 'Product',
+        component: () => import('@/views/user/index'),
+        meta: { title: 'Dashboard', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/product',
     component: Layout,
     name: 'Product',

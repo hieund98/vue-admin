@@ -27,29 +27,19 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="Code" width="auto" align="center">
+      <el-table-column label="Email" width="auto" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.productCode }}</span>
+          <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Quantity" width="auto" align="center">
+      <el-table-column label="Role" width="auto" align="center">
         <template slot-scope="scope">
-          {{ scope.row.actualQuantity }}
+          {{ scope.row.role }}
         </template>
       </el-table-column>
-      <el-table-column label="Sale Price" width="auto" align="center">
+      <el-table-column class-name="status-col" label="Is Active" width="110" align="center">
         <template slot-scope="scope">
-          {{ scope.row.salePrice }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="Import Price" width="auto">
-        <template slot-scope="scope">
-          <span>{{ scope.row.importPrice }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Description" width="auto">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
+          <el-tag :type="scope.row.isActive | statusFilter">{{ scope.row.isActive }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Created At" width="auto">
@@ -64,7 +54,7 @@
           <span>{{ scope.row.updatedAt }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Action" width="auto">
+      <el-table-column align="center" label="Action" width="auto">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">Edit</el-button>
           <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"></el-button>
@@ -84,8 +74,7 @@ export default {
     statusFilter(status) {
       const statusMap = {
         false: 'success',
-        true: 'gray',
-        deleted: 'danger'
+        true: 'gray'
       }
       return statusMap[status]
     }
@@ -105,11 +94,11 @@ export default {
   methods: {
     toEdit(_id) {
       console.log(_id)
-      router.push({ path: '/product/edit', query: { id: _id }})
+      router.push({ path: '/user/edit', query: { id: _id }})
     },
     fireDelete(_id, index) {
       if (confirm('Do you really want to delete this product?')) {
-        axios.delete('http://localhost:3000/products/' + _id)
+        axios.delete('http://localhost:3000/users/' + _id)
           .then(resp => {
             this.list.splice(index, 1)
             this.$message({
@@ -126,12 +115,12 @@ export default {
       }
     },
     fireAdd() {
-      router.push({ path: '/product/add', query: { }})
+      router.push({ path: '/user/add', query: { }})
     },
     fetchData() {
       this.listLoading = true
       axios
-        .get('http://localhost:3000/products?search=' + this.form.name)
+        .get('http://localhost:3000/users?search=' + this.form.name, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
         .then(response => {
           this.list = response.data
           console.log(this.list)

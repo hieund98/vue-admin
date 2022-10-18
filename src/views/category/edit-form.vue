@@ -29,7 +29,7 @@ export default {
         id: '',
         name: '',
         slug: '',
-        delivery: false
+        active: true
       }
     }
   },
