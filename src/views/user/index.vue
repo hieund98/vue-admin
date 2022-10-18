@@ -37,9 +37,9 @@
           {{ scope.row.role }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Is Active" width="110" align="center">
+      <el-table-column class-name="status-col" label="Active" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.isActive | statusFilter">{{ scope.row.isActive }}</el-tag>
+          <el-tag :type="scope.row.isActive | statusFilter" effect="dark" >{{ scope.row.isActive }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Created At" width="auto">
@@ -57,7 +57,7 @@
       <el-table-column align="center" label="Action" width="auto">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">Edit</el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"></el-button>
+          <el-button type="danger" icon="el-icon-turn-off" @click="fireDelete(scope.row._id, scope.$index)">Deactive</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,7 +73,7 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        false: 'success',
+        false: 'info',
         true: 'gray'
       }
       return statusMap[status]
@@ -97,12 +97,12 @@ export default {
       router.push({ path: '/user/edit', query: { id: _id }})
     },
     fireDelete(_id, index) {
-      if (confirm('Do you really want to delete this product?')) {
-        axios.delete('http://localhost:3000/users/' + _id)
+      if (confirm('Do you really want to de-activate this account?')) {
+        axios.delete('http://localhost:3000/users/' + _id, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
           .then(resp => {
             this.list.splice(index, 1)
             this.$message({
-              message: 'Remove Product success!',
+              message: 'Remove User success!',
               type: 'success'
             })
           })
