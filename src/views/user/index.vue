@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="Active" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.isActive | statusFilter" effect="dark" >{{ scope.row.isActive }}</el-tag>
+          <el-tag :type="scope.row.isActive | statusFilter" effect="dark">{{ scope.row.isActive ? 'Active' : 'Disabled' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Created At" width="auto">
@@ -56,16 +56,25 @@
       </el-table-column>
       <el-table-column align="center" label="Action" width="auto">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">Edit</el-button>
-          <el-button type="danger" icon="el-icon-turn-off" @click="fireDelete(scope.row._id, scope.$index)">Deactive</el-button>
+          <el-button type="primary" icon="el-icon-edit" style="margin-bottom: 5px;" @click="toEdit(scope.row._id)">Edit</el-button>
+          <el-button v-if="scope.row.isActive" type="danger" icon="el-icon-turn-off" @click="fireDelete(scope.row._id, scope.$index)">Deactive</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-pagination
+      align="center"
+      background
+      layout="prev, pager, next"
+      :page-count="totalPage"
+      :current-page.sync="currentPage"
+      @current-change="fetchData"
+    />
+
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import axios from 'axios'
 import router from '@/router'
 
@@ -85,7 +94,9 @@ export default {
         name: ''
       },
       list: null,
-      listLoading: true
+      listLoading: true,
+      totalPage: 1,
+      currentPage: 1
     }
   },
   created() {
@@ -97,14 +108,15 @@ export default {
       router.push({ path: '/user/edit', query: { id: _id }})
     },
     fireDelete(_id, index) {
-      if (confirm('Do you really want to de-activate this account?')) {
+      if (confirm('Do you really want to deactivate this account?')) {
         axios.delete('http://localhost:3000/users/' + _id, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
           .then(resp => {
-            this.list.splice(index, 1)
+            // this.list.splice(index, 1)
             this.$message({
               message: 'Remove User success!',
               type: 'success'
             })
+            this.fetchData()
           })
           .catch(error => {
             this.$message({
@@ -120,9 +132,12 @@ export default {
     fetchData() {
       this.listLoading = true
       axios
-        .get('http://localhost:3000/users?search=' + this.form.name, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
+        .get('http://localhost:3000/users?pageSize=4&page=' + this.currentPage + '&search=' + this.form.name, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
         .then(response => {
-          this.list = response.data
+          this.list = response.data.data
+          this.currentPage = response.data.page
+          this.totalPage = response.data.totalPage
+
           console.log(this.list)
           this.listLoading = false
         }).catch(error => {

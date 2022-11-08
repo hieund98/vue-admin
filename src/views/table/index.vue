@@ -55,9 +55,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
-import axios from 'axios';
-import router from '@/router';
+import axios from 'axios'
+import router from '@/router'
 
 export default {
   filters: {
@@ -89,7 +88,7 @@ export default {
       axios
         .get('http://localhost:3000/categories')
         .then(response => {
-          this.list = response.data
+          this.list = response.data.data
           console.log(this.list)
           this.listLoading = false
         })

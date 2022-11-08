@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import axios from 'axios'
 import router from '@/router'
 
@@ -133,7 +132,7 @@ export default {
       axios
         .get('http://localhost:3000/products?search=' + this.form.name)
         .then(response => {
-          this.list = response.data
+          this.list = response.data.data
           console.log(this.list)
           this.listLoading = false
         }).catch(error => {

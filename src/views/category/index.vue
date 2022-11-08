@@ -57,7 +57,7 @@
       <el-table-column align="center" prop="created_at" label="Action" width="auto">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">Edit</el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"></el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import axios from 'axios'
 import router from '@/router'
 
