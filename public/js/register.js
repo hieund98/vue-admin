@@ -14,7 +14,7 @@ function signup() {
     });
     if (data) {
         console.log(data);
-      alert("dang ky thanh cong" );
+      alert("Account register successfully" );
     }
   }
   function handleCreateForm() {

@@ -22,10 +22,10 @@ function loginAPI(data) {
   .then(data => {setCookie("token", data.access_token,30)
  console.log()
   if (typeof(data.access_token)=="undefined" ) {
-    alert("dang nhap khong thanh cong ");
+    alert("Login Failed. Please try again.");
   }else{
-    location='index.html'
-    alert("dang nhap thanh cong")
+    location='shop.html'
+    alert("Login Successful, redirect to home page.");
   }
    }
   )
@@ -51,7 +51,7 @@ function setCookie(cname,cvalue,exdays) {
     let expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
-  
+
   function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
