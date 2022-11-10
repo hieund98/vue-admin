@@ -106,6 +106,34 @@ export const constantRoutes = [
   },
 
   {
+    path: '/order',
+    component: Layout,
+    name: 'Order',
+    meta: { title: 'Order Management', icon: 'el-icon-goods' },
+    children: [
+      {
+        path: 'edit',
+        hidden: true,
+        name: 'Update Order',
+        component: () => import('@/views/order/edit-form'),
+        meta: { title: 'EditForm', icon: 'form' }
+      },
+      {
+        path: 'add',
+        name: 'Add Order',
+        component: () => import('@/views/order/edit-form'),
+        meta: { title: 'Add New', icon: 'form' }
+      },
+      {
+        path: 'index',
+        name: 'Order List',
+        component: () => import('@/views/order/index'),
+        meta: { title: 'Dashboard', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/user',
     component: Layout,
     name: 'User',

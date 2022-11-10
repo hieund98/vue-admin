@@ -52,6 +52,11 @@
           {{ scope.row.description }}
         </template>
       </el-table-column>
+      <el-table-column label="Image" width="auto">
+        <template slot-scope="scope">
+          <el-image fit="fill" :src="scope.row.images[0]" alt="Image" />
+        </template>
+      </el-table-column>
       <el-table-column align="center" prop="created_at" label="Created At" width="auto">
         <template slot-scope="scope">
           <i class="el-icon-time" />
@@ -71,6 +76,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      align="center"
+      background
+      layout="prev, pager, next"
+      :page-count="totalPage"
+      :current-page.sync="currentPage"
+      @current-change="fetchData"
+    />
   </div>
 </template>
 
@@ -95,7 +108,9 @@ export default {
         name: ''
       },
       list: null,
-      listLoading: true
+      listLoading: true,
+      totalPage: 1,
+      currentPage: 1
     }
   },
   created() {
@@ -130,9 +145,18 @@ export default {
     fetchData() {
       this.listLoading = true
       axios
-        .get('http://localhost:3000/products?search=' + this.form.name)
+        .get('http://localhost:3000/products?pageSize=4&page=' + this.currentPage + '&search=' + this.form.name)
         .then(response => {
           this.list = response.data.data
+          this.currentPage = response.data.page
+          this.totalPage = 3
+          console.log(this.list)
+          for (const [key, value] of Object.entries(this.list)) {
+            if (value.images[0] !== undefined) {
+              value.images[0] = value.images[0].split('\\')[2]
+              this.list[key].images[0] = '/img/product-img/' + value.images[0]
+            }
+          }
           console.log(this.list)
           this.listLoading = false
         }).catch(error => {

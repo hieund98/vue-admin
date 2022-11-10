@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="fetchData">Search</el-button>
-        <el-button type="success" icon="el-icon-plus" @click="fireAdd">Add</el-button>
+<!--        <el-button type="success" icon="el-icon-plus" @click="fireAdd">Add</el-button>-->
       </el-form-item>
     </el-form>
     <el-table
@@ -17,47 +17,57 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="STT" width="95">
+      <el-table-column align="center" label="STT" width="55">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column label="Name" width="auto" align="center">
+      <el-table-column align="center" label="Order Code" width="auto">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.orderCode }}
         </template>
       </el-table-column>
-      <el-table-column label="Slug" width="auto" align="center">
+      <el-table-column label="Customer Name" width="auto" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.slug }}</span>
+          <span>{{ scope.row.user[0].name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Created At" width="auto" align="center">
+      <el-table-column label="Customer Email" width="auto" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.user[0].email }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Deliver Address" width="auto" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.user[0].address }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="Customer Phone Number" width="auto">
+        <template slot-scope="scope">
+          <span>{{ scope.row.user[0].phoneNumber }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="Active" width="110" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.isDeleted | statusFilter" effect="dark">{{ scope.row.isDeleted ? 'Canceled' : 'Created' }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="created_at" label="Created At" width="auto">
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          {{ scope.row.createdAt }}
+          <span>{{ scope.row.createdAt }}</span>
         </template>
       </el-table-column>
-      <!--      <el-table-column class-name="status-col" label="Status" width="110" align="center">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
-      <el-table-column align="center" prop="created_at" label="Update At" width="auto">
+      <el-table-column align="center" prop="created_at" label="Updated At" width="auto">
         <template slot-scope="scope">
           <i class="el-icon-time" />
           <span>{{ scope.row.updatedAt }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Updated By" width="auto">
-        <template slot-scope="scope">
-          <span>{{ scope.row.updatedBy }}</span>
-        </template>
-      </el-table-column>
       <el-table-column align="center" prop="created_at" label="Action" width="auto">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">Edit</el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"/>
+          <el-button type="primary" icon="el-icon-view" @click="toEdit(scope.row._id)">Detail</el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="fireDelete(scope.row._id, scope.$index)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -80,8 +90,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        false: 'success',
-        true: 'gray',
+        false: 'secondary',
+        true: 'info',
         deleted: 'danger'
       }
       return statusMap[status]
@@ -103,16 +113,16 @@ export default {
   },
   methods: {
     toEdit(_id) {
-      console.log(_id)
-      router.push({ path: '/category/edit', query: { id: _id }})
+      console.log(12211212)
+      router.push({ path: '/order/edit', query: { id: _id }})
     },
     fireDelete(_id, index) {
-      if (confirm('Do you really want to delete this category?')) {
-        axios.delete('http://localhost:3000/categories/' + _id)
+      if (confirm('Do you really want to delete this product?')) {
+        axios.delete('http://localhost:3000/orders/' + _id, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
           .then(resp => {
             this.list.splice(index, 1)
             this.$message({
-              message: 'Remove category success!',
+              message: 'Remove Product success!',
               type: 'success'
             })
           })
@@ -125,15 +135,15 @@ export default {
       }
     },
     fireAdd() {
-      router.push({ path: '/category/add', query: { }})
+      router.push({ path: '/product/add', query: { }})
     },
     fetchData() {
       this.listLoading = true
       axios
-        .get('http://localhost:3000/categories?search=' + this.form.name)
+        .get('http://localhost:3000/orders/list?search=' + this.form.name, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
         .then(response => {
-          this.list = response.data.data
-          console.log(this.list)
+          this.list = response.data
+          console.log(this.list[0].user[0].phoneNumber)
           this.listLoading = false
         }).catch(error => {
           this.$message({
@@ -142,6 +152,10 @@ export default {
           })
         })
 
+      // getList().then(response => {
+      //   this.list = response.data.items
+      //   this.listLoading = false
+      // })
     }
   }
 }

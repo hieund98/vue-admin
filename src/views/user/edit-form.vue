@@ -8,7 +8,7 @@
         <el-input v-model="form.email" style="width: auto" />
       </el-form-item>
       <el-form-item v-if="!this.$route.query.id" label="Password">
-        <el-input type="password" v-model="form.password" style="width: auto" />
+        <el-input v-model="form.password" type="password" style="width: auto" />
       </el-form-item>
       <el-form-item label="Age">
         <el-input v-model="form.age" style="width: auto" />
@@ -40,7 +40,6 @@
 <script>
 import axios from 'axios'
 import router from '@/router'
-
 export default {
   data() {
     return {
@@ -126,7 +125,6 @@ export default {
                 message: 'Add User success!',
                 type: 'success'
               })
-
               this.form.name = ''
               this.form.email = ''
               this.form.password = ''
@@ -155,7 +153,6 @@ export default {
   }
 }
 </script>
-
 <style>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;

@@ -19,6 +19,14 @@
       <el-form-item label="Description">
         <el-input v-model="form.description" style="width: auto" />
       </el-form-item>
+      <el-form-item label="Product Image">
+        <el-upload class="upload-box" drag action="" :auto-upload="false" :on-change="handleImport" :on-preview="handlePreview" :limit="1" :on-exceed="handleExceed">
+          <i class="el-icon-upload" />
+          <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+          <div slot="tip" class="el-upload__tip">Single JSON file with size less than 500kb</div>
+        </el-upload>
+      </el-form-item>
+
       <el-form-item label="Category">
         <el-select v-model="form.category" placeholder="please select a category">
           <el-option
@@ -48,6 +56,7 @@ import router from '@/router'
 export default {
   data() {
     return {
+      uploadFile: null,
       categories: [],
       imageUrl: '',
       form: {
@@ -66,7 +75,7 @@ export default {
     axios
       .get('http://localhost:3000/categories')
       .then(response => {
-        this.categories = response.data
+        this.categories = response.data.data
       })
 
     if (this.$route.query.id) {
@@ -74,6 +83,27 @@ export default {
     }
   },
   methods: {
+    handleImport(file) {
+      this.uploadFile = file
+      const reader = new FileReader()
+      console.log(this.uploadFile)
+      reader.readAsText(this.uploadFile.raw)
+      reader.onload = async(e) => {
+        try {
+          this.fileContent = JSON.parse(e.target.result)
+        } catch (err) {
+          console.log(`Load JSON file error: ${err.message}`)
+        }
+      }
+    },
+    handlePreview() {
+      const myWindow = window.open()
+      myWindow.document.write(JSON.stringify(this.fileContent))
+      myWindow.document.close()
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`The limit is 1, you selected ${files.length + fileList.length} totally, please first remove the unwanted file`)
+    },
     fetchData() {
       this.listLoading = true
       axios
@@ -99,7 +129,7 @@ export default {
         formData.append('importPrice', this.form.importPrice)
         formData.append('salePrice', this.form.salePrice)
         formData.append('actualQuantity', this.form.actualQuantity)
-
+        formData.append('images', this.uploadFile)
         axios
           .patch('http://localhost:3000/products/' + this.$route.query.id, formData)
           .then(response => {
@@ -129,8 +159,9 @@ export default {
         formData.append('importPrice', this.form.importPrice)
         formData.append('salePrice', this.form.salePrice)
         formData.append('actualQuantity', this.form.actualQuantity)
-
-        axios.post('http://localhost:3000/products', formData)
+        this.uploadFile = event.target.files[0]
+        formData.append('images', this.uploadFile)
+        axios.post('http://localhost:3000/products', formData, { headers: { Authorization: 'Bearer ' + process.env.VUE_APP_BEARER_TOKEN }})
           .then(response => {
             if (response.status === 200 || response.status === 201) {
               this.$message({
@@ -138,7 +169,12 @@ export default {
                 type: 'success'
               })
               this.form.name = ''
-              this.form.slug = ''
+              this.form.productCode = ''
+              this.form.salePrice = ''
+              this.form.description = ''
+              this.form.importPrice = ''
+              this.form.actualQuantity = ''
+              this.form.category = ''
             } else {
               this.$message({
                 message: response.data.message,
