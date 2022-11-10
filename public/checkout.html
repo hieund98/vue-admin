@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>FAShop - Fashion Accessory Shop</title>
     <link rel="icon" href="img/core-img/favicon.ico">
 
@@ -96,67 +96,67 @@
         <div class="cart-button">
             <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
         </div>
+      <div class="cart-content d-flex">
 
-        <div class="cart-content d-flex">
+        <div class="cart-list">
+          <div class="single-cart-item">
+            <a href="#" class="product-image">
+              <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
+              <div class="cart-item-desc">
+                <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+                <span class="badge">Topshop</span>
+                <h6>Dress1</h6>
+                <p class="size">Size: S</p>
+                <p class="color">Color: Red</p>
+                <p class="price">$51.00</p>
+              </div>
+            </a>
+          </div>
 
-            <div class="cart-list">
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
+          <div class="single-cart-item">
+            <a href="#" class="product-image">
+              <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
+              <div class="cart-item-desc">
+                <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+                <span class="badge">Topshop</span>
+                <h6>Dress2</h6>
+                <p class="size">Size: S</p>
+                <p class="color">Color: Red</p>
+                <p class="price">$52.00</p>
+              </div>
+            </a>
+          </div>
 
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
 
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="cart-amount-summary">
-
-                <h2>Summary</h2>
-                <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
-                    <li><span>delivery:</span> <span>Free</span></li>
-                    <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
-                </ul>
-                <div class="checkout-btn mt-100">
-                    <a href="checkout.html" class="btn essence-btn">check out</a>
-                </div>
-            </div>
+          <div class="single-cart-item">
+            <a href="#" class="product-image">
+              <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
+              <div class="cart-item-desc">
+                <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+                <span class="badge">Topshop</span>
+                <h6>Dress3</h6>
+                <p class="size">Size: S</p>
+                <p class="color">Color: Red</p>
+                <p class="price">$53.00</p>
+              </div>
+            </a>
+          </div>
         </div>
+
+        <div class="cart-amount-summary">
+
+          <h2>Summary</h2>
+          <ul class="summary-table">
+            <li><span>subtotal:</span> <span>$156.00</span></li>
+            <li><span>delivery:</span> <span>Free</span></li>
+            <li><span>discount:</span> <span>0%</span></li>
+            <li><span>total:</span> <span>$156.00</span></li>
+          </ul>
+          <div class="checkout-btn mt-100">
+            <a href="checkout.html" class="btn essence-btn">check out</a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="breadcumb_area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
@@ -183,17 +183,16 @@
                         <form action="#" method="post">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="first_name">First Name <span>*</span></label>
-                                    <input type="text" class="form-control" id="first_name" value="" required>
+                                    <label for="first_name">Full Name <span>*</span></label>
+                                    <input type="text" class="form-control" id="name" value="" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="last_name">Last Name <span>*</span></label>
-                                    <input type="text" class="form-control" id="last_name" value="" required>
+                                    <label for="last_name">Age<span>*</span></label>
+                                    <input type="text" class="form-control" id="age" value="" required>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="street_address">Address <span>*</span></label>
-                                    <input type="text" class="form-control mb-3" id="street_address" value="">
-                                    <input type="text" class="form-control" id="street_address2" value="">
+                                    <input type="text" class="form-control mb-3" id="address" value="">
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="city">Town/City <span>*</span></label>
@@ -209,7 +208,7 @@
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="email_address">Email Address <span>*</span></label>
-                                    <input type="email" class="form-control" id="email_address" value="">
+                                    <input type="email" class="form-control" id="email" value="">
                                 </div>
 
                                 <div class="col-12">
@@ -237,10 +236,12 @@
 
                         <ul class="order-details-form mb-4">
                             <li><span>Product</span> <span>Total</span></li>
-                            <li><span>Cocktail Yellow dress</span> <span>$59.90</span></li>
-                            <li><span>Subtotal</span> <span>$59.90</span></li>
+                            <li><span>Dress1</span> <span>$51.00</span></li>
+                          <li><span>Dress2</span> <span>$52.00</span></li>
+                          <li><span>Dress3</span> <span>$53.00</span></li>
+                            <li><span>Subtotal</span> <span>$156.00</span></li>
                             <li><span>Shipping</span> <span>Free</span></li>
-                            <li><span>Total</span> <span>$59.90</span></li>
+                            <li><span>Total</span> <span>$156.00</span></li>
                         </ul>
 
                         <div id="accordion" role="tablist" class="mb-4">
@@ -274,7 +275,7 @@
                             </div>
                         </div>
 
-                        <a href="#" class="btn essence-btn">Place Order</a>
+                        <a href="#" class="btn essence-btn" id="placeOrder">Place Order</a>
                     </div>
                 </div>
             </div>
@@ -309,6 +310,83 @@
                 </div>
             </div>
     </footer>
+    <script>
+      $( document ).ready(function() {
+        var options = {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' +getCookie('token')
+          }
+/*          body: JSON.stringify({
+            'client_id': '(API KEY)',
+            'client_secret': '(API SECRET)',
+            'grant_type': 'client_credentials'
+          })*/
+        };
+        fetch('http://localhost:3000/categories')
+          .then((response) => response.json())
+          .then((data) => {
+            for (const item of data.data) {
+              $('#cate-1').append("<li><a href=\"shop.html?id=" +item._id+ "\">" + item.name + "</a></li>");
+              $('#cate-2').append("<li><a href=\"shop.html?id=" +item._id+ "\">" + item.name + "</a></li>");
+              $('#clothing').append("<li><a href=\"shop.html?id=" +item._id+ "\">" + item.name + "</a></li>");
+            }
+          });
+
+        fetch('http://localhost:3000/users/' + getCookie('id'), options)
+          .then((response) => response.json())
+          .then((data) => {
+            $('#name').val(data.name);
+            $('#email').val(data.email);
+            $('#address').val(data.address);
+            $('#state').val(data.address);
+            $('#city').val(data.address);
+            $('#phone_number').val(data.phoneNumber);
+            $('#age').val(data.age);
+          });
+      });
+
+      $("#placeOrder").on('click', function() {
+        var options = {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' +getCookie('token')
+          },
+          body: JSON.stringify({
+            "products": [
+              {
+                "product": "634d92900b367c59884b0cf3",
+                "quantity": 1
+              },
+              {
+                "product": "636d1026fc1592ee8632e0d5",
+                "quantity": 1
+              },
+              {
+                "product": "634d92c20b367c59884b0cf5",
+                "quantity": 1
+              }
+            ]
+          })
+        };
+        fetch('http://localhost:3000/orders', options)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            alert("Your order has been placed successfully");
+            window.location.href = 'http://localhost:9528/homepage.html';
+          });
+      });
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+    </script>
+
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
